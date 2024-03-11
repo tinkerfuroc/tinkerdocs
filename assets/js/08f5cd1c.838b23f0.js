@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktinker_wiki=self.webpackChunktinker_wiki||[]).push([[7645],{3542:s=>{s.exports=JSON.parse('{"label":"docusaurus","permalink":"/tinkerdocs/blog/tags/docusaurus","allTagsPath":"/tinkerdocs/blog/tags","count":4,"unlisted":false}')}}]);
