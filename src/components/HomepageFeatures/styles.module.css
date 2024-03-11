@@ -1,0 +1,18 @@
+.features {
+  display: flex;
+  align-content: space-around;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+@media screen and (max-width: 966px) {
+  .features {
+    padding: 2rem;;
+  }
+}
+
+.featureSvg {
+  height: 200px;
+  width: 200px;
+}
