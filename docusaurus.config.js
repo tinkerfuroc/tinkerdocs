@@ -69,14 +69,14 @@ const config = {
         title: 'Tinker',
         logo: {
           alt: 'My Site Logo',
-          src: 'img/Tinker.png',
+          src: 'img/favicon.ico',
         },
         items: [
           {
             type: 'docSidebar',
             sidebarId: 'tutorialSidebar',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Docs',
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
@@ -121,7 +121,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Tinker@FuRoC. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,

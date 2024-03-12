@@ -1,0 +1,8 @@
+{
+  "label": "语音",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "语音识别、语音输出、声源识别相关知识"
+  }
+}

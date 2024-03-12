@@ -1,0 +1,8 @@
+{
+  "label": "导航",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "导航、SLAM相关知识"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "label": "视觉",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "机器视觉相关知识"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "label": "程序设计",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "C++、Python、ROS等程序设计相关知识"
+  }
+}
