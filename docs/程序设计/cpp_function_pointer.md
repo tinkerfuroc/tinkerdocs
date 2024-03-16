@@ -8,7 +8,7 @@ date: today
 
 ## Intro
 
-In [ROS2 humble tutorial for publisher and subscriber]([Writing a simple publisher and subscriber (C++) &mdash; ROS 2 Documentation: Humble documentation](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html)), function pointer plays an important part in the callback function:
+In [ROS2 humble tutorial for publisher and subscriber](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Cpp-Publisher-And-Subscriber.html), function pointer plays an important part in the callback function:
 
 `publisher`:
 
