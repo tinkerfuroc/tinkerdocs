@@ -13,6 +13,7 @@ We welcome contributions to Tinker Docs! If you would like to contribute, please
 5. Wait for the `github actions` to build and deploy your changes to the site. Once the build is successful, your changes will be live on the site.
 6. If the build fails, you will need to fix the issues and push the changes to your repository. The build will automatically be triggered again.
 
+For more information, you can take a look at [how-to-fork-a-github-repository](https://www.freecodecamp.org/chinese/news/how-to-fork-a-github-repository/).
 
 ## Commands
 
