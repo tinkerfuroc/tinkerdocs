@@ -1,7 +1,7 @@
 ---
-title: Callback Function In ROS2 Pub and Sub
-author: Cabbage Dog
-date: today
+last_update:
+  date: 3/15/2024
+  author: Cabbage Dog
 ---
 
 # Callback Function In ROS2 Pub and Sub
@@ -189,4 +189,3 @@ node.create_subscription(std_msgs.msg.String, "my_topic", lambda msg: common_cal
 ```
 
 For the basics of python lambda, see [ref](https://www.w3schools.com/python/python_lambda.asp).
-
