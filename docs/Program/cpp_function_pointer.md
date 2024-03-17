@@ -121,7 +121,7 @@ You will encounter a compilation error, since the member function requires an im
 
 However, nobody says the callback function must be a member function, if you use a free function as callback function, a direct use of function pointer is possible.
 
-Besides, the number of arguments is 1, which is the message itself. However, you may encounter the situation where you want more arguments passed.   `std::bind` can implement this easily:
+Besides, the number of arguments is 1, which is the message itself. However, you may encounter the situation where you want more arguments passed.   `std::bind` can implement this easily:
 
 ```cpp
 auto callback = std::bind(callback_func, std::placeholders::_1, topic_name);
@@ -189,3 +189,4 @@ node.create_subscription(std_msgs.msg.String, "my_topic", lambda msg: common_cal
 ```
 
 For the basics of python lambda, see [ref](https://www.w3schools.com/python/python_lambda.asp).
+
