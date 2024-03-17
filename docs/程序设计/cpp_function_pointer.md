@@ -1,7 +1,7 @@
 ---
-title: Callback Function In ROS2 Pub and Sub
-author: Cabbage Dog
-date: today
+last_update:
+  data: 3/15/2024
+  author: Cabbage Dog
 ---
 
 # Callback Function In ROS2 Pub and Sub
