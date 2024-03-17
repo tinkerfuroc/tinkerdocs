@@ -1,6 +1,6 @@
 ---
 last_update:
-  data: 3/15/2024
+  date: 3/15/2024
   author: Cabbage Dog
 ---
 
