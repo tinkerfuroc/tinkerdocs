@@ -7,7 +7,7 @@ Tinker Docs is built with [Docusaurus 2](https://docusaurus.io/).
 We welcome contributions to Tinker Docs! If you would like to contribute, please follow the steps below:
 
 1. `fork` the repository to your own GitHub account, for example `Grange007/tinkerdocs`.
-2. `clone` your repository and write your article (following the project structure).
+2. `clone` your repository and write your article (following the [project structure](https://tinkerfuroc.github.io/tinkerdocs/docs/Intro/project_structure)).
 3. `commit` your changes and `push` them to your repository.
 4. Create a `pull request` to the `main` branch of the `Tinker/tinkerdocs` repository.
 5. Wait for the `github actions` to build and deploy your changes to the site. Once the build is successful, your changes will be live on the site.

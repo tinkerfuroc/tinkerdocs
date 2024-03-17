@@ -189,4 +189,3 @@ node.create_subscription(std_msgs.msg.String, "my_topic", lambda msg: common_cal
 ```
 
 For the basics of python lambda, see [ref](https://www.w3schools.com/python/python_lambda.asp).
-
