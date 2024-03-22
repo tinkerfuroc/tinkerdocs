@@ -226,7 +226,7 @@ source /opt/ros/melodic/setup.bash
 cd ~/catkin_ws/src
 ```
 
-使用catkin工具创建一个功能包（示例功能包名为test_pkg），并加上需要的依赖（示例为std_msgs rospy roscpp)
+使用catkin工具创建一个功能包（示例功能包名为test_pkg），并加上需要的依赖（示例为std_msgs rospy roscpp）
 
 ```
 catkin_create_pkg test_pkg std_msgs rospy roscpp
@@ -242,7 +242,7 @@ cd ~/catkin_ws/src/test_pkg/src
 
 复制下载好的样例代码至该文件夹（可以图形化界面操作）即可
 
-### 运行一个节点
+## 2 运行一个节点
 
 创建好工作空间和功能包，并写好节点源码文件放入对应文件夹之后，如果是python脚本，需要将文件权限改为可执行文件的权限
 
@@ -270,7 +270,7 @@ rosrun test_package pub_image.py
 roslaunch <package_name> <launch_file_name>
 ```
 
-## 2 在ROS进行话题通信
+## 3 在ROS进行话题通信
 
 需要将pub_image.py中的图片路径更改成自己的图片路径（需要右键打开图片属性来查看路径）。
 
