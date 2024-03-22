@@ -1,6 +1,6 @@
 ---
 last_update:
-  date: 21/3/2024
+  date: 3/21/2024
   author: Zhouzt21
 tag: Tinker青训-2024春
 ---
