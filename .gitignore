@@ -4,6 +4,10 @@
 # Production
 /build
 
+# Unfinished drafts
+/drafts/*
+!/drafts/.gitkeep
+
 # Generated files
 .docusaurus
 .cache-loader
