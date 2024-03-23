@@ -183,7 +183,7 @@ rqt
 mkdir -p catkin_ws/src
 ```
 
-进入空间空间，使用catkin工具进行编译
+进入工作空间，使用catkin工具进行编译
 
 ```sh
 cd ~/catkin_ws
