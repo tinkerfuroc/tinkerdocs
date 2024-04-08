@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunktinker_wiki=self.webpackChunktinker_wiki||[]).push([[9676],{5891:e=>{e.exports=JSON.parse('{"permalink":"/tinkerdocs/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":1,"blogDescription":"Blog","blogTitle":"Blog"}')}}]);
