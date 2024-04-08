@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktinker_wiki=self.webpackChunktinker_wiki||[]).push([[472],{5513:e=>{e.exports=JSON.parse('{"title":"Recent posts","items":[{"title":"Hello World","permalink":"/tinkerdocs/blog/2024/3/12/hello-world","unlisted":false}]}')}}]);
