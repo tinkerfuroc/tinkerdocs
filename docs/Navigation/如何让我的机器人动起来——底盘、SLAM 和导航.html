@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-Navigation/如何让我的机器人动起来——底盘、SLAM 和导航" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.2.1">
+<title data-rh="true">如何让我的机器人动起来——SLAM、导航与底盘 | Tinker Docs</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://tinkerfuroc.github.io/tinkerdocs/img/favicon.ico"><meta data-rh="true" name="twitter:image" content="https://tinkerfuroc.github.io/tinkerdocs/img/favicon.ico"><meta data-rh="true" property="og:url" content="https://tinkerfuroc.github.io/tinkerdocs/docs/Navigation/如何让我的机器人动起来——底盘、SLAM 和导航"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="如何让我的机器人动起来——SLAM、导航与底盘 | Tinker Docs"><meta data-rh="true" name="description" content="Overview"><meta data-rh="true" property="og:description" content="Overview"><link data-rh="true" rel="icon" href="/tinkerdocs/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://tinkerfuroc.github.io/tinkerdocs/docs/Navigation/如何让我的机器人动起来——底盘、SLAM 和导航"><link data-rh="true" rel="alternate" href="https://tinkerfuroc.github.io/tinkerdocs/docs/Navigation/如何让我的机器人动起来——底盘、SLAM 和导航" hreflang="en"><link data-rh="true" rel="alternate" href="https://tinkerfuroc.github.io/tinkerdocs/docs/Navigation/如何让我的机器人动起来——底盘、SLAM 和导航" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/tinkerdocs/blog/rss.xml" title="Tinker Docs RSS Feed">
+<link rel="alternate" type="application/atom+xml" href="/tinkerdocs/blog/atom.xml" title="Tinker Docs Atom Feed"><link rel="stylesheet" href="/tinkerdocs/assets/css/styles.74d5694d.css">
+<script src="/tinkerdocs/assets/js/runtime~main.8856bb44.js" defer="defer"></script>
+<script src="/tinkerdocs/assets/js/main.acf2d5a3.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const c=new URLSearchParams(window.location.search).entries();for(var[t,e]of c)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/tinkerdocs/"><div class="navbar__logo"><img src="/tinkerdocs/img/favicon.ico" alt="My Site Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/tinkerdocs/img/favicon.ico" alt="My Site Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Tinker</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/tinkerdocs/docs/Intro">Docs</a><a class="navbar__item navbar__link" href="/tinkerdocs/blog">Blog</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/tinkerfuroc/tinkerdocs" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)" aria-live="polite"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/tinkerdocs/docs/Intro">Intro</a><button aria-label="Expand sidebar category &#x27;Intro&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/tinkerdocs/docs/category/机械臂">机械臂</a><button aria-label="Expand sidebar category &#x27;机械臂&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/tinkerdocs/docs/category/语音">语音</a><button aria-label="Expand sidebar category &#x27;语音&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/tinkerdocs/docs/category/底盘">底盘</a><button aria-label="Expand sidebar category &#x27;底盘&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/tinkerdocs/docs/category/硬件">硬件</a><button aria-label="Expand sidebar category &#x27;硬件&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/tinkerdocs/docs/category/程序设计">程序设计</a><button aria-label="Expand sidebar category &#x27;程序设计&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/tinkerdocs/docs/category/视觉">视觉</a><button aria-label="Expand sidebar category &#x27;视觉&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/tinkerdocs/docs/category/导航">导航</a><button aria-label="Collapse sidebar category &#x27;导航&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/tinkerdocs/docs/Navigation">navigation</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/tinkerdocs/docs/Navigation/如何让我的机器人动起来——底盘、SLAM 和导航">如何让我的机器人动起来——SLAM、导航与底盘</a></li></ul></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/tinkerdocs/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/tinkerdocs/docs/category/导航"><span itemprop="name">导航</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">如何让我的机器人动起来——SLAM、导航与底盘</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><h1>如何让我的机器人动起来——SLAM、导航与底盘</h1>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="overview">Overview<a href="#overview" class="hash-link" aria-label="Direct link to Overview" title="Direct link to Overview">​</a></h2>
+<p>解决的核心问题：如何让小车自动移动到指定位置</p>
+<p><em>一个简单的问题由于实际环境的复杂导致存在大量的误差</em></p>
+<p>我的周围可能存在很多的障碍物，路径存在限制，我要怎么知道我周边环境的地图信息？</p>
+<p>前往目标点的路径不一定是直线，我要怎么根据现有地图找到最优路径？</p>
+<p>我知道小车的整体目标速度，要怎么控制电机才能让整个小车按照我的目标速度行驶？</p>
+<p><strong>SLAM</strong>：得到环境的整个地图</p>
+<p><strong>导航</strong>：根据已有的环境地图，输入要到达的目标点，根据算法输出在小车行驶过程中每个时刻的底盘速度</p>
+<p><strong>底盘</strong>：将导航计算出的底盘速度通过运动学结算转化为每个电机的速度，再控制每个电机按照目标速度行驶</p>
+<p><em>由于 SLAM 和导航都是非常庞杂的工程框架，本次培训将<strong>不涉及</strong>对具体代码的讲解，而以<strong>整体框架</strong>的介绍为主</em></p>
+<p><em>相信在听懂整体框架后，后续上手也不会太难</em> <!-- -->😄</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="slam">SLAM<a href="#slam" class="hash-link" aria-label="Direct link to SLAM" title="Direct link to SLAM">​</a></h2>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="什么是-slam">什么是 SLAM<a href="#什么是-slam" class="hash-link" aria-label="Direct link to 什么是 SLAM" title="Direct link to 什么是 SLAM">​</a></h3>
+<p>SLAM 是 <strong>Simultaneous Localization And Mapping</strong> 的缩写，中文译作 ”<strong>同时定位与地图构建</strong>“ 。</p>
+<p>它是指搭载特定<strong>传感器</strong>的主体，在<strong>没有环境先验信息</strong>的情况下，于<strong>运动过程</strong>中建立<strong>环境</strong>的模型，同时估计自己的<strong>运动</strong>。</p>
+<p>在实际应用中，SLAM 的过程一般会先于导航完成，通过遥控 or 自动行驶的方式让机器人先完成对环境的建图。</p>
+<p><a href="https://www.bilibili.com/video/BV1tS4y1S7qE/?spm_id_from=333.1350.jump_directly&amp;vd_source=66fdb6136aee8c29f464c123e245cc80" target="_blank" rel="noopener noreferrer">利用Cartographer SLAM算法跑德意志博物馆bag效果</a></p>
+<p>需要实现的功能：</p>
+<ol>
+<li>我在什么地方？——定位</li>
+<li>周围环境是什么样？——建图</li>
+</ol>
+<p>只有时刻明白自己在地图中的相对位置，机器人才能一边移动一边还原出地图的全貌。</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="slam-如何实现建图定位问题">SLAM 如何实现建图定位问题<a href="#slam-如何实现建图定位问题" class="hash-link" aria-label="Direct link to SLAM 如何实现建图定位问题" title="Direct link to SLAM 如何实现建图定位问题">​</a></h3>
+<p><img decoding="async" loading="lazy" src="https://fishros.com/d2lros2/foxy/chapt10/10.3SLAM%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0/imgs/image-20220421152216184.png" alt="经典视觉SLAM结构" class="img_ev3q"></p>
+<p><strong>经典 SLAM 流程：</strong></p>
+<ol>
+<li><strong>传感器信息读取</strong>：通过各类传感器实现对环境的感知，比如通过激光雷达获取环境的深度信息。同时可以通过传感器融合来提高位置估计的精度，比如融合轮式里程计、IMU、雷达、深度相机数据等。</li>
+<li><strong>前端里程计</strong>（视觉/激光）：根据相机获得的图像数据或激光雷达获得的点云数据，通过前后数据之间对比得出机器人位置的变化。</li>
+<li><strong>后端优化</strong>：对不同时刻下前端里程计和回环检测的信息进行整合和优化，得到全局一致的轨迹和地图。</li>
+<li><strong>回环检测</strong>：判断机器人是否到达过先前经过的位置，从而解决位置估计误差问题。</li>
+<li><strong>建图</strong>：将 SLAM 得到的环境信息作为地图存储下来，机器人之后在环境中的运动就可以通过已知的地图来导航了。</li>
+</ol>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="传感器">传感器<a href="#传感器" class="hash-link" aria-label="Direct link to 传感器" title="Direct link to 传感器">​</a></h4>
+<p><strong>激光雷达</strong></p>
+<p>感兴趣的同学可以看一下我写的激光雷达概览：<a href="https://grange007.github.io/2024/03/04/OverviewOfLidar/" target="_blank" rel="noopener noreferrer">LiDAR 初探 | Grange&#x27;s blog (grange007.github.io)</a></p>
+<p>基本原理：</p>
+<ul>
+<li>向被测物体射出一束激光，通过对激光方向、传播时间的计算，得到物体目前的位置</li>
+<li>通过旋转的方式可向四周射出激光，从而获得周围环境的位置数据</li>
+<li>最终得到离散的点云数据（每个点代表这个位置有个东西），点云的密度取决于激光雷达的帧率和点频</li>
+</ul>
+<p><img decoding="async" loading="lazy" src="https://blog.generationrobots.com/wp-content/uploads/2019/08/what-is-a-lidar-part-1-9.jpg" alt="" class="img_ev3q">
+<img decoding="async" loading="lazy" src="/tinkerdocs/assets/images/pointclouds-c1a10784b94f5f05cd12b6beea4d7415.png" width="1279" height="1366" class="img_ev3q"></p>
+<p><strong>摄像头</strong></p>
+<p>通过相机拍摄的图像得到环境中物体相对机器人的位置（物体在图像中的深度）</p>
+<ul>
+<li>
+<p>单目相机：比较难以准确确定物体的深度</p>
+</li>
+<li>
+<p>双目相机：由左右两个单目相机组成，可通过比较左右眼图像中同一像素的位置差异判断物体的远近</p>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" src="https://robot.czxy.com/docs/camera/chapter03/assets/image-20200403161101821.png" alt="" class="img_ev3q"></p>
+<ul>
+<li>深度相机：相机内置红外结构光或激光传感器，可直接测出与物体的距离</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="前端里程计">前端里程计<a href="#前端里程计" class="hash-link" aria-label="Direct link to 前端里程计" title="Direct link to 前端里程计">​</a></h4>
+<p><img decoding="async" loading="lazy" src="/tinkerdocs/assets/images/cameramove-46626c50be6fc1c43cae3e7119817f9b.png" width="1305" height="432" class="img_ev3q"></p>
+<ul>
+<li>
+<p>通过相邻帧间的图像估计相机运动，并恢复场景的空间结构（图像特征匹配+几何位姿计算）</p>
+</li>
+<li>
+<p>具有短时记忆，只能计算相邻时刻的运动</p>
+</li>
+<li>
+<p>由于误差，可能存在累计偏移的问题，称为<strong>漂移</strong>（e.g. 每次前端里程计估计出来的物体方向都比实际向左偏了1°）</p>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" src="/tinkerdocs/assets/images/slamdrift-75c1522a96a93e889cfbe60ed43b715a.png" width="1255" height="641" class="img_ev3q"></p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="后端优化">后端优化<a href="#后端优化" class="hash-link" aria-label="Direct link to 后端优化" title="Direct link to 后端优化">​</a></h4>
+<p>收到的数据中存在<strong>噪声</strong>，要考虑如何从带有噪声的数据中估计整个系统的状态——滤波和非线性优化算法</p>
+<p><em>需要较多的数学基础，前面的道路留给之后再探索吧~</em></p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="回环检测">回环检测<a href="#回环检测" class="hash-link" aria-label="Direct link to 回环检测" title="Direct link to 回环检测">​</a></h4>
+<p>主要解决位置估计随时间漂移的问题</p>
+<p>假设机器人经过一段时间的运动后回到了原点，但由于漂移，它计算出的位置估计值却没有回到原点，那么就应该把它计算的位置给拉回原点</p>
+<p>主要通过视觉与机器学习方法完成：判断当前图像与历史图像的相似性，从而辨认出它们来自同一个地方</p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="建图">建图<a href="#建图" class="hash-link" aria-label="Direct link to 建图" title="Direct link to 建图">​</a></h4>
+<p><img decoding="async" loading="lazy" src="/tinkerdocs/assets/images/map-272fd610e9d5db7c933b440ceeae049e.png" width="1288" height="948" class="img_ev3q"></p>
+<p><strong>3D &amp; 2D 地图</strong></p>
+<ul>
+<li>存储地图的三维/二维位置数据</li>
+</ul>
+<p><strong>尺度地图</strong></p>
+<ul>
+<li>把真实世界按比例缩小，直接表示在地图上</li>
+</ul>
+<p>​	<strong>栅格地图表示方法</strong>：</p>
+<ul>
+<li>
+<p>由许多小方块划分地图，用每一个方块的数值来表示地图信息</p>
+<p>传感器存在噪声，机器人前方的某个位置到底有没有物体（障碍物）是不确定的。</p>
+<p>采用概率**（占据率）**来解决这一问题</p>
+<ul>
+<li>
+<p>认为确实有物体的栅格的占据率为100%</p>
+</li>
+<li>
+<p>确定没有物体的栅格占据率为0%，</p>
+</li>
+<li>
+<p>不确定的栅格就用（确认占据概率/确认非占据概率）值表示占据率。</p>
+<p><img decoding="async" loading="lazy" src="https://fishros.com/d2lros2/humble/chapt10/basic/2.%E6%A0%85%E6%A0%BC%E5%9C%B0%E5%9B%BE%E4%BB%8B%E7%BB%8D/imgs/image-20220506134542099.png" alt="image-20220506134542099" class="img_ev3q"></p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>拓扑地图</strong></p>
+<ul>
+<li>
+<p>只由节点和边组成</p>
+</li>
+<li>
+<p>强调地图元素之间的连通关系</p>
+<p><img decoding="async" loading="lazy" alt="image-20240426204233622" src="/tinkerdocs/assets/images/topology-1ffe1f98c8d454098635e5034ba41062.png" width="582" height="513" class="img_ev3q"></p>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" src="https://fishros.com/d2lros2/foxy/chapt10/10.3SLAM%E6%8A%80%E6%9C%AF%E6%A6%82%E8%BF%B0/imgs/image-20220421152216184.png" alt="经典视觉SLAM结构" class="img_ev3q"></p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="导航">导航<a href="#导航" class="hash-link" aria-label="Direct link to 导航" title="Direct link to 导航">​</a></h2>
+<p>在获得地图之后，导航要实现的就是从地图上找到距离目标点的最优路径，并将这一路径发送给底盘。如果说 SLAM 解决的是“我在哪”，导航就是要解决“我要怎么走”。</p>
+<p>导航的具体实现方式有很多，Tinker 目前采用 <a href="https://navigation.ros.org/" target="_blank" rel="noopener noreferrer">Nav2</a> 作为导航框架，以下导航内容也将基于 Nav2 进行讲解。</p>
+<p><img decoding="async" loading="lazy" src="https://fishros.com/d2lros2/humble/chapt11/get_started/3.%E4%BD%BF%E7%94%A8FishBot%E8%BF%9B%E8%A1%8C%E8%87%AA%E4%B8%BB%E5%AF%BC%E8%88%AA/imgs/navigation_fishbot2.gif" alt="navigation_fishbot2" class="img_ev3q"></p>
+<p><img decoding="async" loading="lazy" src="https://fishros.com/d2lros2/humble/chapt11/get_started/3.%E4%BD%BF%E7%94%A8FishBot%E8%BF%9B%E8%A1%8C%E8%87%AA%E4%B8%BB%E5%AF%BC%E8%88%AA/imgs/fishbot_multi_point.gif" alt="fishbot_multi_point" class="img_ev3q"></p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="nav2-的整体架构">Nav2 的整体架构<a href="#nav2-的整体架构" class="hash-link" aria-label="Direct link to Nav2 的整体架构" title="Direct link to Nav2 的整体架构">​</a></h3>
+<p><img decoding="async" loading="lazy" src="https://fishros.com/d2lros2/humble/chapt11/get_started/1.Nav2%E5%AF%BC%E8%88%AA%E6%A1%86%E6%9E%B6%E4%BB%8B%E7%BB%8D/imgs/architectural_diagram-16525447663514.png" alt="Navigation2框架图" class="img_ev3q"></p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="传入数据">传入数据<a href="#传入数据" class="hash-link" aria-label="Direct link to 传入数据" title="Direct link to 传入数据">​</a></h3>
+<p><code>map</code>：先前通过 SLAM 完成的建图</p>
+<p><code>Waypoint Foller</code>：发送导航目标点</p>
+<p><code>TF Transforms</code>：将传感器的坐标转化到世界坐标</p>
+<p><code>Behavior Tree</code>：对导航行为架构的描述</p>
+<p><code>Sensor Data</code>：导航过程中同时获取的传感器数据（虽然已有了先前的 SLAM 地图，但动态环境下可能会临时出现障碍物，需要实时地更新/重做 SLAM ）</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="四个服务">四个服务<a href="#四个服务" class="hash-link" aria-label="Direct link to 四个服务" title="Direct link to 四个服务">​</a></h3>
+<p>对上面的架构图进一步的进行解释，可以简单分为一大三小四个服务。</p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="bt-navigator-server-导航行为树服务器">BT Navigator Server 导航行为树服务器<a href="#bt-navigator-server-导航行为树服务器" class="hash-link" aria-label="Direct link to BT Navigator Server 导航行为树服务器" title="Direct link to BT Navigator Server 导航行为树服务器">​</a></h4>
+<p>可以理解为组织机器人行为顺序的架构，（详情参考<a href="https://arxiv.org/pdf/1709.00084" target="_blank" rel="noopener noreferrer">这篇文章</a>），通过这个大的服务来进行下面三个小服务组织和调用。</p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="planner-server-规划服务器">Planner Server 规划服务器<a href="#planner-server-规划服务器" class="hash-link" aria-label="Direct link to Planner Server 规划服务器" title="Direct link to Planner Server 规划服务器">​</a></h4>
+<p>通过路径搜索函数，计算完成一些目标函数的路径。（可以近似理解为最短路问题，如 Dijkstra、A* ）</p>
+<p><strong>全局代价地图 （Global Costmap）</strong>：</p>
+<p>全局代价地图主要用于全局的路径规划器。从上面结构图中其在可以看到在 Planner Server 中。</p>
+<p>通常包含的图层有：</p>
+<ul>
+<li>
+<p>Static Map Layer：静态地图层，通常都是SLAM建立完成的静态地图。</p>
+</li>
+<li>
+<p>Obstacle Map Layer：障碍地图层，用于动态的记录传感器感知到的障碍物信息。</p>
+</li>
+<li>
+<p>Inflation Layer：膨胀层，在以上两层地图上进行膨胀（向外扩张），以避免机器人的外壳会撞上障碍物。</p>
+</li>
+</ul>
+<p><img decoding="async" loading="lazy" src="https://assets.leetcode.com/uploads/2021/02/18/example2_1.png" alt="" class="img_ev3q"></p>
+<p><img decoding="async" loading="lazy" src="https://s3.amazonaws.com/media-p.slid.es/uploads/1476635/images/10738671/global_planner.png" alt="" class="img_ev3q"></p>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="controller-server-控制服务器">Controller Server 控制服务器<a href="#controller-server-控制服务器" class="hash-link" aria-label="Direct link to Controller Server 控制服务器" title="Direct link to Controller Server 控制服务器">​</a></h4>
+<p>在ROS 1中也被称为局部规划器，是我们跟随全局计算路径或完成局部任务的方法。（结合机器人具体结构细节控制机器人按照 Planner Server 给出的路径来行驶）</p>
+<p><img decoding="async" loading="lazy" src="https://s3.amazonaws.com/media-p.slid.es/uploads/1476635/images/10738702/local_plan.png" alt="img" class="img_ev3q"></p>
+<p><img decoding="async" loading="lazy" src="https://s3.amazonaws.com/media-p.slid.es/uploads/1476635/images/10738701/restrictions.png" alt="img" class="img_ev3q"></p>
+<p><img decoding="async" loading="lazy" src="https://www.guyuehome.com//Uploads/Editor/202105/20210512_85734.png" alt="img" class="img_ev3q"></p>
+<p><strong>局部代价地图（Local Costmap）</strong></p>
+<p>局部代价地图主要用于局部的路径规划器。从上面结构图中其在可以看到在 Controller Server 中。</p>
+<p>通常包含的图层有：</p>
+<ul>
+<li>Obstacle Map Layer：障碍地图层，用于动态的记录传感器感知到的障碍物信息。</li>
+<li>Inflation Layer：膨胀层，在障碍地图层上进行膨胀（向外扩张），以避免机器人的外壳会撞上障碍物。</li>
+</ul>
+<h4 class="anchor anchorWithStickyNavbar_LWe7" id="recovery-server-恢复服务器">Recovery Server 恢复服务器<a href="#recovery-server-恢复服务器" class="hash-link" aria-label="Direct link to Recovery Server 恢复服务器" title="Direct link to Recovery Server 恢复服务器">​</a></h4>
+<p>恢复器是容错系统的支柱。恢复器的目标是处理系统的未知状况或故障状况并自主处理这些状况。说白了就是机器人可能出现意外的时候想办法让其正常，比如走着走着掉坑如何爬出来。</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="传出数据">传出数据<a href="#传出数据" class="hash-link" aria-label="Direct link to 传出数据" title="Direct link to 传出数据">​</a></h3>
+<p><code>cmd_vel</code>：发送给底盘的目标速度数据</p>
+<div class="language-json codeBlockContainer_Ckt0 theme-code-block" style="--prism-color:#393A34;--prism-background-color:#f6f8fa"><div class="codeBlockContent_biex"><pre tabindex="0" class="prism-code language-json codeBlock_bY9V thin-scrollbar" style="color:#393A34;background-color:#f6f8fa"><code class="codeBlockLines_e6Vv"><span class="token-line" style="color:#393A34"><span class="token plain">geometry_msgs/Twist </span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">linear:</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  x: 0.5</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  y: 0.0</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  z: 0.0</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">angular:</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  x: 0.0</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  y: 0.0</span><br></span><span class="token-line" style="color:#393A34"><span class="token plain">  z: 0.0</span><br></span></code></pre><div class="buttonGroup__atx"><button type="button" aria-label="Copy code to clipboard" title="Copy" class="clean-btn"><span class="copyButtonIcons_eSgA" aria-hidden="true"><svg viewBox="0 0 24 24" class="copyButtonIcon_y97N"><path fill="currentColor" d="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z"></path></svg><svg viewBox="0 0 24 24" class="copyButtonSuccessIcon_LjdS"><path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z"></path></svg></span></button></div></div></div>
+<p>通过这一数据，我们就能告诉底盘目标的速度了！</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="底盘">底盘<a href="#底盘" class="hash-link" aria-label="Direct link to 底盘" title="Direct link to 底盘">​</a></h2>
+<p>到这里，我们还需要最后一步，就是让底盘按照我们的目标速度行驶。</p>
+<p>要做到这一点，我们需要完成两部分功能：</p>
+<ol>
+<li>完成从底盘到电机的运动学结算</li>
+<li>控制电机按照目标速度转动</li>
+</ol>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="底盘运动学结算">底盘运动学结算<a href="#底盘运动学结算" class="hash-link" aria-label="Direct link to 底盘运动学结算" title="Direct link to 底盘运动学结算">​</a></h3>
+<p><strong>正运动学结算</strong>：由电机速度计算得到底盘整体速度</p>
+<p><strong>逆运动学结算</strong>：由底盘整  体速度反推得到电机速度</p>
+<p>底盘运动学结算需要完成的功能就是将底盘整体的速度转化为每个电机的速度，我们是通过电机的速度来控制底盘的</p>
+<p>在此我们以两轮差速模型为例作为讲解</p>
+<p><img decoding="async" loading="lazy" src="https://www.guyuehome.com//Uploads/Editor/202105/20210512_85734.png" alt="img" class="img_ev3q"></p>
+<p>运动特性为两轮差速驱动，其底部两个同构驱动轮的转动为其提供动力</p>
+<p><img decoding="async" loading="lazy" alt="img" src="/tinkerdocs/assets/images/diffmodel-b5eda4e4ceec49283431974963b1ab54.png" width="1271" height="821" class="img_ev3q"></p>
+<p>机器人的运动简化模型如图 所示，$X$ 轴正方向为前进、$Y$ 轴正方向为左平移、$Z$ 轴正方向为逆时针。机器人两个轮子之间的间距为 $D$，机器人 $X$ 轴和 $Z$ 轴的速度分别为：$V_x$ 和 $V_z$，机器人左轮和右轮的线速度分别为：$V_l$ 和 $V_r$，角速度分别为：$\omega_l$ 和 $\omega_r$，机器人轮子的半径为 $R$ 。</p>
+<p>假设机器人往一个左前的方向行进了一段距离，设机器人的右轮比左轮多走的距离近似为 $K$,以机器人的轮子上的点作为参考点做延长参考线，可得：$\theta_1=\theta_2$。由于这个 $\Delta t$ 很小，因此角度的变化量 $\theta_1$ 也很小，因此有近似公式：
+$$
+\theta_2\approx sin(\theta_2)=KD
+$$
+由此可以计算出下面的式子：
+$$
+K=(V_r-V_l)*\Delta t
+$$</p>
+<p>$$
+\omega = \theta / \Delta t
+$$
+由上面的公式和式子可以求解出运动学正解的结果：</p>
+<p>机器人 $X$ 轴方向速度
+$$
+V_x=(V_l+V_r)/2
+$$
+机器人 $Z$ 轴方向速度:
+$$
+V_z=(V_r-V_l)/D
+$$
+由正解直接反推得出运动学逆解的结果：</p>
+<p>机器人左轮的速度:
+$$
+V_l=V_x-(V_z<em>D)/2 \
+\omega_l=V_l/R
+$$
+机器人右轮的速度:
+$$
+V_r=V_x+(V_z</em>D)/2 \
+\omega_r = V_r/R
+$$
+理论上，如果我们能控制每个电机按照这里解算出  的速度转动，就能让底盘按照我们预期的速度行驶了！</p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="pid-控制器">PID 控制器<a href="#pid-控制器" class="hash-link" aria-label="Direct link to PID 控制器" title="Direct link to PID 控制器">​</a></h3>
+<p>由于篇幅问题，PID 算法的具体原理不会在这里过多展开，感兴趣的同学可以参考<a href="https://blog.csdn.net/qq_41415238/article/details/122079899" target="_blank" rel="noopener noreferrer">这篇文章</a>。</p>
+<p>我们可以把电机看作一个系统，向其输入一个电流，电机会输出一个转速，也就是我们需要的角速度 $\omega$</p>
+<p><strong>开环控制</strong></p>
+<p>开环控制指输入不依赖于输出的控制方式，也是最直观的控制方式。假设我们已经知道了电机转速与电流的对应关系，我们只需要输入一个对应电流，即可获得我们的目标速度。</p>
+<p>然而，实际情况可能会比这复杂很多，开环控制往往难以达到预期的精度。</p>
+<p><strong>闭环控制</strong></p>
+<p>闭环控制指输出会反馈给输入端从而影响输入的控制方式。这是一种<strong>负反馈</strong>调节方式。</p>
+<p>通过安装在电机上的传感器，我们可以得到电机目前实际转动的角速度，通过这一角速度和目标速度的差值，决定我应该向电机提供的电流。</p>
+<p>如果太快了，就给少一点；如果太慢了，就给多一点。</p>
+<p><img decoding="async" loading="lazy" alt="image-20240427152318622" src="/tinkerdocs/assets/images/pid-c3c08a858171a39db1e852a13819a7eb.png" width="1733" height="503" class="img_ev3q"></p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="参考资料">参考资料<a href="#参考资料" class="hash-link" aria-label="Direct link to 参考资料" title="Direct link to 参考资料">​</a></h2>
+<p><a href="https://navigation.ros.org/" target="_blank" rel="noopener noreferrer">Nav2 — Nav2 1.0.0 documentation (ros.org)</a></p>
+<p><a href="https://fishros.com/d2lros2/#/" target="_blank" rel="noopener noreferrer">动手学ROS2 (fishros.com)</a></p>
+<p><a href="https://github.com/gaoxiang12/slambook2" target="_blank" rel="noopener noreferrer">视觉SLAM十四讲</a></p>
+<p><a href="https://blog.csdn.net/qq_41415238/article/details/122079899" target="_blank" rel="noopener noreferrer">什么是 PID 控制器：工作原理及其应用_pid控制-CSDN博客</a></p>
+<p><a href="https://www.guyuehome.com/33953" target="_blank" rel="noopener noreferrer">两轮差速小车运动学分析 - 古月居 (guyuehome.com)</a></p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col"><a href="https://github.com/tinkerfuroc/tinkerdocs/docs/Navigation/如何让我的机器人动起来——底盘、SLAM 和导航.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"><span class="theme-last-updated">Last updated<!-- --> on <b><time datetime="2024-04-28T15:46:37.000Z" itemprop="dateModified">Apr 28, 2024</time></b> by <b>Grange</b></span></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/tinkerdocs/docs/Navigation"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">navigation</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#overview" class="table-of-contents__link toc-highlight">Overview</a></li><li><a href="#slam" class="table-of-contents__link toc-highlight">SLAM</a><ul><li><a href="#什么是-slam" class="table-of-contents__link toc-highlight">什么是 SLAM</a></li><li><a href="#slam-如何实现建图定位问题" class="table-of-contents__link toc-highlight">SLAM 如何实现建图定位问题</a></li></ul></li><li><a href="#导航" class="table-of-contents__link toc-highlight">导航</a><ul><li><a href="#nav2-的整体架构" class="table-of-contents__link toc-highlight">Nav2 的整体架构</a></li><li><a href="#传入数据" class="table-of-contents__link toc-highlight">传入数据</a></li><li><a href="#四个服务" class="table-of-contents__link toc-highlight">四个服务</a></li><li><a href="#传出数据" class="table-of-contents__link toc-highlight">传出数据</a></li></ul></li><li><a href="#底盘" class="table-of-contents__link toc-highlight">底盘</a><ul><li><a href="#底盘运动学结算" class="table-of-contents__link toc-highlight">底盘运动学结算</a></li><li><a href="#pid-控制器" class="table-of-contents__link toc-highlight">PID 控制器</a></li></ul></li><li><a href="#参考资料" class="table-of-contents__link toc-highlight">参考资料</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/tinkerdocs/docs/Intro">Tutorial</a></li></ul></div><div class="col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://tinkerfuroc.github.io/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Home<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/tinkerdocs/blog">Blog</a></li><li class="footer__item"><a href="https://github.com/tinkerfuroc" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2024 Tinker@FuRoC. Built with Docusaurus.</div></div></div></footer></div>
+</body>
+</html>
