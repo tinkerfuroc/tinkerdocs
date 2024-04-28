@@ -1,4 +1,11 @@
-﻿# 如何让我的机器人动起来——SLAM、导航与底盘
+﻿---
+last_update:
+  date: 4/29/2024
+  author: Grange
+tag: Tinker青训-2024春
+---
+
+# 如何让我的机器人动起来——SLAM、导航与底盘
 
 ## Overview
 
