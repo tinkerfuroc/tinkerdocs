@@ -64,16 +64,19 @@ geometry_msgs/Point centroid
 | Service | Message Type | Description |
 | ------- | ------------ | ----------- |
 | `/object_detection_service` | `tinker_vision_msgs/ObjectDetection.srv` | Returns objects detected by Kinect when requested. |
+| `/feature_extraction_service` | `tinker_vision_msgs/FeatureExtraction.srv` | Extracts features from an image and returns them. |
+| `/point_direction_service` | `tinker_vision_msgs/PointDirection.srv` | Returns the point direction of a person. |
+| `/object_classification_service` | `tinker_vision_msgs/ObjectClassification.srv` | Classifies all objects detected. |
 
 ### object_detection_service
 
-`` format:
-```python
+`format:`
+```sh
 # empty by default, can be set to:
 # - 'register_person': register the nearest person in the FOV and track him.
 string mode
 
-# ---
+---
 
 std_msgs/Header header
 int32 status
@@ -120,6 +123,55 @@ Object[] objects
   </TabItem>
 
 </Tabs>
+
+### feature_extraction_service
+
+```sh
+---
+
+```
+
+
+### point_direction_service
+
+```sh
+Image image
+
+---
+
+std_msgs/Header header
+
+# the direction is the line connecting the two points
+float32 left_p1_x
+float32 left_p1_y
+float32 left_p2_x
+float32 left_p2_y
+float32 right_p1_x
+float32 right_p1_y
+float32 right_p2_x
+float32 right_p2_y
+```
+
+### object_classification_service
+
+`tinker_vision_msgs/Category` message:
+```sh
+# the category id of the object
+int16 object_id
+
+# the similarity score of the object to the category
+float32 similarity
+```
+
+```sh
+Image image
+BoundingBox[] bounding_boxes
+
+---
+
+std_msgs/Header header
+Category[] categories
+```
 
 ## Actions
 
