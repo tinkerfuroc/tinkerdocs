@@ -37,26 +37,30 @@ Upon receiving a new image from the Kinect camera, publishes a `tinker_vision_ms
 ```python
 std_msgs/Header header
 
-# 0 for success, 1 for fail
+# 0 for success, 1 for fail.
 int32 status
 
-# empty when status == 1
+# Empty when status == 1.
 tinker_vision_msgs/Object[] objects
 ```
 
 `tinker_vision_msgs/Object` message:
 ```python
-# confidence [0, 1]
+# Confidence in [0, 1].
 float32 conf
 
-# registered person id if tracking else 0
+# Registered person id if tracking else 0. See the detection service below.
 int16 id
 
-# object class like 'person', 'apple', ...
+# Object class like 'person', 'apple', ...
 string cls
 
-# object's centroid in the camera's frame specified in header
+# Object's centroid in the camera's frame specified in header.
 geometry_msgs/Point centroid
+
+# Unused when published from this topic. See the detection service below.
+int16 object_id
+float32 similarity
 ```
 
 ## Services
@@ -70,19 +74,36 @@ geometry_msgs/Point centroid
 
 ### object_detection_service
 
-`format:`
+Request format:
 ```sh
-# empty by default, can be set to:
+# Used to set options, empty by default:
 # - 'register_person': register the nearest person in the FOV and track him.
-string mode
+# - 'match_object': match the detected objects to some target objects.
+# - 'request_image': include raw RGB and depth image in the response.
+# - 'request_segments': include segments for each object in the response.
+# Example: 'match_object|request_image|request_segments'
+string flags
 
 ---
 
 std_msgs/Header header
+
+# 0 for success, 1 for fail.
 int32 status
+
+# The person's id if successfully registered with 'register_person' flag set. 0 otherwise.
 int32 person_id
+
 Object[] objects
 
+# Raw RGB image in BGR8 format, if 'request_image' flag is set.
+sensor_msgs/Image rgb_image
+
+# Raw depth image in 32FC1 format (in meters), if 'request_image' flag is set.
+sensor_msgs/Image depth_image
+
+# Segments of each object in 8UC1 format, if 'request_segments' flag is set.
+sensor_msgs/Image[] segments
 ```
 
 #### Example Usage
@@ -100,7 +121,7 @@ Object[] objects
       def send_request(self):
           # fill the request
           request = ObjectDetection.Request()
-          request.mode = ''
+          request.flags = 'match_object|request_image'
           
           # call the service
           future = self.client.call_async(request)
@@ -134,22 +155,14 @@ Object[] objects
 
 ### point_direction_service
 
-```sh
-Image image
+Find the object being pointed at by the nearest person in FOV.
 
+```sh
+# None
 ---
 
 std_msgs/Header header
-
-# the direction is the line connecting the two points
-float32 left_p1_x
-float32 left_p1_y
-float32 left_p2_x
-float32 left_p2_y
-float32 right_p1_x
-float32 right_p1_y
-float32 right_p2_x
-float32 right_p2_y
+Object object
 ```
 
 ### object_classification_service
