@@ -79,8 +79,9 @@ Request format:
 # Used to set options, empty by default:
 # - 'register_person': register the nearest person in the FOV and track him.
 # - 'match_object': match the detected objects to some target objects.
-# - 'request_image': include RGB image, depth image and segments for each object in the response.
-# Example: 'image_given|match_object|request_image'
+# - 'request_image': include raw RGB and depth image in the response.
+# - 'request_segments': include segments for each object in the response.
+# Example: 'match_object|request_image|request_segments'
 string flags
 
 ---
@@ -101,11 +102,11 @@ sensor_msgs/Image rgb_image
 # Raw depth image in 32FC1 format (in meters), if 'request_image' flag is set.
 sensor_msgs/Image depth_image
 
-# Segments of each object in 8UC1 format, if 'request_image' flag is set.
+# Segments of each object in 8UC1 format, if 'request_segments' flag is set.
 sensor_msgs/Image[] segments
 ```
 
-#### Example Usage (Deprecated)
+#### Example Usage
 <Tabs>
   <TabItem value="python" label="Python" default>
 
@@ -120,7 +121,7 @@ sensor_msgs/Image[] segments
       def send_request(self):
           # fill the request
           request = ObjectDetection.Request()
-          request.mode = ''
+          request.flags = 'match_object|request_image'
           
           # call the service
           future = self.client.call_async(request)
@@ -154,22 +155,14 @@ sensor_msgs/Image[] segments
 
 ### point_direction_service
 
-```sh
-Image image
+Find the object being pointed at by the nearest person in FOV.
 
+```sh
+# None
 ---
 
 std_msgs/Header header
-
-# the direction is the line connecting the two points
-float32 left_p1_x
-float32 left_p1_y
-float32 left_p2_x
-float32 left_p2_y
-float32 right_p1_x
-float32 right_p1_y
-float32 right_p2_x
-float32 right_p2_y
+Object object
 ```
 
 ### object_classification_service
