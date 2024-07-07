@@ -57,6 +57,16 @@ string cls
 
 # object's centroid in the camera's frame specified in header
 geometry_msgs/Point centroid
+
+# Used when "match_object" flag is set
+# Matched object ID
+int16 object_id
+# Cosine similarity between their latent vectors, in [0, 1]
+float32 similarity
+
+# Used when "find_pointed_object" flag is set
+# 1 if being pointed at by the nearest person, 0 otherwise
+uint8 being_pointed
 ```
 
 ## Services
@@ -65,16 +75,21 @@ geometry_msgs/Point centroid
 | ------- | ------------ | ----------- |
 | `/object_detection_service` | `tinker_vision_msgs/ObjectDetection.srv` | Returns objects detected by Kinect when requested. |
 | `/feature_extraction_service` | `tinker_vision_msgs/FeatureExtraction.srv` | Extracts features from an image and returns them. |
-| `/point_direction_service` | `tinker_vision_msgs/PointDirection.srv` | Returns the point direction of a person. |
 | `/object_classification_service` | `tinker_vision_msgs/ObjectClassification.srv` | Classifies all objects detected. |
 
 ### object_detection_service
 
 `format:`
 ```sh
-# empty by default, can be set to:
-# - 'register_person': register the nearest person in the FOV and track him.
-string mode
+# Used to set options, empty by default:
+# - 'register_person':      register the nearest person in the FOV and track him.
+# - 'match_object':         match the detected objects to some target objects.
+# - 'request_image':        include raw RGB and depth image in the response.
+# - 'request_segments':     include segments for each object in the response.
+# - 'find_pointed_object':  find the object being pointed at by the nearest person.
+#
+# Example: 'match_object|request_image|request_segments'
+string flags
 
 ---
 
@@ -129,27 +144,6 @@ Object[] objects
 ```sh
 ---
 
-```
-
-
-### point_direction_service
-
-```sh
-Image image
-
----
-
-std_msgs/Header header
-
-# the direction is the line connecting the two points
-float32 left_p1_x
-float32 left_p1_y
-float32 left_p2_x
-float32 left_p2_y
-float32 right_p1_x
-float32 right_p1_y
-float32 right_p2_x
-float32 right_p2_y
 ```
 
 ### object_classification_service
