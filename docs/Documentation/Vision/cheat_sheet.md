@@ -196,15 +196,14 @@ Get quaternion from a vector.
 
     rotation = np.eye(4)
     # (x0, y0, z0) ------> (x1, y1, z1)
-    # x, y, z = x1 - x0, y1 - y0, z1 - z0
-    x, y, z = x0 - x1, y0 - y1, z0 - z1 # I don't know why but this one works
+    x, y, z = x1 - x0, y1 - y0, z1 - z0
     
     # x-axis
     rotation[:3, 0] = np.array([x, y, z])
     # z-axis, must be (0, 0, 1) when z == 0
     rotation[:3, 2] = np.array([-x * z, - y * z, x ** 2 + y ** 2])
     # y-axis, calculated from x and z
-    rotation[:3, 1] = np.array([y, -x, 0])
+    rotation[:3, 1] = np.array([-y, x, 0])
     q = tf_transformations.quaternion_from_matrix(rotation)
   ```
 
