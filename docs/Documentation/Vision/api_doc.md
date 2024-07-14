@@ -12,16 +12,49 @@ Describe this submodule.
 
 ## Running
 
-Run `vision.bash` to start the basic detection service, or execute the commands seperately:
+Run `vision.bash` to start the basic detection service, or execute the commands seperately.
 
-1. Start the realsense driver with
-   ```bash
-   ros2 launch realsense2_camera rs_launch.py align_depth.enable:=true depth_module.profile:=848x480x30 rgb_camera.profile:=848x480x30
-   ```
-2. Start the detection service with
-   ```bash
-   ros2 run object_detection service
-   ```
+### Running Realsense Driver
+
+Start the realsense driver with
+
+```bash
+ros2 launch realsense2_camera rs_launch.py align_depth.enable:=true rgb_camera.color_profile:=1280x720x15 depth_module.depth_profile:=1280x720x15
+```
+
+Run `ros2 param describe <your_node_name> <param_name>` to get the list of supported profiles. For example:
+
+```bash
+ros2 param describe /camera/camera rgb_camera.color_profile
+ros2 param describe /camera/camera depth_module.depth_profile
+```
+
+### Starting Detection Service
+
+Start the detection service with
+
+```bash
+ros2 run object_detection service
+```
+
+Declared parameters:
+
+* `camera_type`: `realsense` or `kinect`. Default: `realsense`
+* `visualization_en`: visualizes the detection result if set to `true`. Default: false
+* `match_objects_en`: match the detections with a list of known objects if set to `true`. Default: false
+* `detection_topic_en`: enables the `object_detection` topic if set to `true`. Default: true
+* `publish_rate`: maximum publish rate on the `object_detection` topic. Default: 5
+
+Example:
+
+```bash
+ros2 run object_detection service --ros-args  \
+    -p camera_type:="kinect" \
+    -p visualization_en:=true \
+    -p match_objects_en:=true \
+    -p detection_topic_en:=true \
+    -p publish_rate:=2
+```
 
 ## Topics
 
