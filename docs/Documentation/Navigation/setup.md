@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 # Tinker Navigation Setup
 
-This doc is used for Tinker Navigation setup. Make sure you have finished the `ros2-humble` installation and the `ros2_control` setup in [this doc](/docs/Documentation/Intro/Tinker_new_pc_get_started.md).
+This doc is used for Tinker Navigation setup. Make sure you have finished the `ros2-humble` installation and the `ros2_control` setup in [this doc](/docs/Intro/Tinker_new_pc_get_started.md).
 
 ## Install `nav2` stack
 
