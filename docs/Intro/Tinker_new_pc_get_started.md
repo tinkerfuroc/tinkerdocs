@@ -5,7 +5,7 @@ last_update:
 ---
 
 # Tinker New PC Setup
-This Document aims to provide the steps to set up a PC for Tinker developing. 
+This Document aims to provide the steps to set up a PC for Tinker developing, which can also be used to setup the relevant  dependencies for ROS2 Humble on Ubuntu 22.04.
 ## System Requirements
 `Ubuntu 22.04 Desktop`
 ## Basic Software Installation
@@ -88,4 +88,5 @@ sudo apt install ros-humble-gazebo-ros-pkgs
 sudo apt-get install ros-humble-ros2-control
 sudo apt-get install ros-humble-ros2-controllers
 sudo apt-get install ros-humble-gazebo-ros2-control
+sudo apt install ros-humble-joint-state-publisher
 ```
